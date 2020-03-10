@@ -36,16 +36,25 @@ public class FXMLController {
 
     @FXML
     private Button btnReset;
+    
+    @FXML
+    private TextArea txtTempi;
 
     @FXML
     void doInsert(ActionEvent event) {
     	String parola=txtParola.getText();
     	LinkedList<String>elencoParole=(LinkedList<String>) elenco.getElenco();
+    	double tempoTot=0.0;
     	if(!elencoParole.contains(parola)) {
+    		double startTime=System.nanoTime();
     		elencoParole.add(parola);
+    		double endTime=System.nanoTime();
+    		tempoTot=endTime-startTime;
     		
     	}
     	txtResult.clear();
+    	txtTempi.clear();
+    	txtTempi.appendText(String.valueOf(tempoTot));
     	Collections.sort(elencoParole);
     	for(int i=0;i<elencoParole.size();i++) {
     		txtResult.appendText(elencoParole.get(i)+"\n");
@@ -55,20 +64,35 @@ public class FXMLController {
 
     @FXML
     void doReset(ActionEvent event) {
+    	double tempoTot=0.0;
+    	double startTime=System.nanoTime();
     	txtResult.clear();
+    	double endTime=System.nanoTime();
+    	tempoTot=endTime-startTime;
+    	txtTempi.clear();
+    	txtTempi.appendText(String.valueOf(tempoTot));
+    	
     }
     @FXML
     void doCancella(ActionEvent event) {
     	String parola=txtParola.getText();
     	LinkedList<String>elencoParole=(LinkedList<String>) elenco.getElenco();
     	boolean trovato=false;
+    	double tempoTot=0.0;
     	for(int i=0;i<elencoParole.size();i++) {
     		if(elencoParole.get(i).compareTo(parola)==0)
     			trovato=true;
     	}
-    	if(trovato==true)
+    	if(trovato==true) {
+    		double startTime=System.nanoTime();
     		elencoParole.remove(parola);
+    		double endTime=System.nanoTime();
+    		tempoTot=endTime-startTime;
+    		
+    	}
     	txtResult.clear();
+    	txtTempi.clear();
+    	txtTempi.appendText(String.valueOf(tempoTot));
     	Collections.sort(elencoParole);
     	for(int i=0;i<elencoParole.size();i++) {
     		txtResult.appendText(elencoParole.get(i)+"\n");
@@ -82,6 +106,7 @@ public class FXMLController {
         assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert txtTempi != null : "fx:id=\"txtTempi\" was not injected: check your FXML file 'Scene.fxml'.";
 
         elenco = new Parole() ;
     }
