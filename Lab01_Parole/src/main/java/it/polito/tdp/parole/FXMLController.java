@@ -3,6 +3,8 @@ package it.polito.tdp.parole;
 import it.polito.tdp.parole.model.Parole;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,12 +36,23 @@ public class FXMLController {
 
     @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	String parola=txtParola.getText();
+    	LinkedList<String>elencoParole=(LinkedList<String>) elenco.getElenco();
+    	if(!elencoParole.contains(parola)) {
+    		elencoParole.add(parola);
+    		
+    	}
+    	txtResult.clear();
+    	Collections.sort(elencoParole);
+    	for(int i=0;i<elencoParole.size();i++) {
+    		txtResult.appendText(elencoParole.get(i)+"\n");
+    	}
+    	
     }
 
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	txtResult.clear();
     }
 
     @FXML
