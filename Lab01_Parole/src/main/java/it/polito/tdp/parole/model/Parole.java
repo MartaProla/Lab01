@@ -16,7 +16,10 @@ public class Parole {
 	public void addParola(String p) {
 		if(!parole.contains(p))
 			parole.add(p);
-		
+	
+	}
+	public void removeParola(String p) {
+		parole.remove(p);
 	}
 	
 	public List<String> getElenco() {

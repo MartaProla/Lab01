@@ -27,7 +27,10 @@ public class FXMLController {
 
     @FXML
     private Button btnInserisci;
-
+    
+    @FXML
+    private Button btnCancella;
+    
     @FXML
     private TextArea txtResult;
 
@@ -54,11 +57,29 @@ public class FXMLController {
     void doReset(ActionEvent event) {
     	txtResult.clear();
     }
+    @FXML
+    void doCancella(ActionEvent event) {
+    	String parola=txtParola.getText();
+    	LinkedList<String>elencoParole=(LinkedList<String>) elenco.getElenco();
+    	boolean trovato=false;
+    	for(int i=0;i<elencoParole.size();i++) {
+    		if(elencoParole.get(i).compareTo(parola)==0)
+    			trovato=true;
+    	}
+    	if(trovato==true)
+    		elencoParole.remove(parola);
+    	txtResult.clear();
+    	Collections.sort(elencoParole);
+    	for(int i=0;i<elencoParole.size();i++) {
+    		txtResult.appendText(elencoParole.get(i)+"\n");
+    	}
+    }
 
     @FXML
     void initialize() {
         assert txtParola != null : "fx:id=\"txtParola\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnInserisci != null : "fx:id=\"btnInserisci\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Scene.fxml'.";
 
