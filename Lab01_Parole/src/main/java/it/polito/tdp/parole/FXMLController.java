@@ -1,10 +1,10 @@
 package it.polito.tdp.parole;
 
-import it.polito.tdp.parole.model.Parole;
+import it.polito.tdp.parole.model.ParoleArray;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 
 public class FXMLController {
 	
-	Parole elenco ;
+	ParoleArray elenco ;
 
     @FXML
     private ResourceBundle resources;
@@ -43,7 +43,7 @@ public class FXMLController {
     @FXML
     void doInsert(ActionEvent event) {
     	String parola=txtParola.getText();
-    	LinkedList<String>elencoParole=(LinkedList<String>) elenco.getElenco();
+    	ArrayList<String>elencoParole=(ArrayList<String>) elenco.getElenco();
     	double tempoTot=0.0;
     	if(!elencoParole.contains(parola)) {
     		double startTime=System.nanoTime();
@@ -76,16 +76,19 @@ public class FXMLController {
     @FXML
     void doCancella(ActionEvent event) {
     	String parola=txtParola.getText();
-    	LinkedList<String>elencoParole=(LinkedList<String>) elenco.getElenco();
+    	ArrayList<String>elencoParole=(ArrayList<String>) elenco.getElenco();
     	boolean trovato=false;
     	double tempoTot=0.0;
+    	int index=0;
     	for(int i=0;i<elencoParole.size();i++) {
-    		if(elencoParole.get(i).compareTo(parola)==0)
+    		if(elencoParole.contains(parola)) {
     			trovato=true;
+    			index=i;
+    		}
     	}
     	if(trovato==true) {
     		double startTime=System.nanoTime();
-    		elencoParole.remove(parola);
+    		elencoParole.remove(index);
     		double endTime=System.nanoTime();
     		tempoTot=endTime-startTime;
     		
@@ -108,6 +111,6 @@ public class FXMLController {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtTempi != null : "fx:id=\"txtTempi\" was not injected: check your FXML file 'Scene.fxml'.";
 
-        elenco = new Parole() ;
+        elenco = new ParoleArray() ;
     }
 }
